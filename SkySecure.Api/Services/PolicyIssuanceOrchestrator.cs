@@ -44,7 +44,13 @@ namespace SkySecure.Api.Services
                 var premium = CalculatePremium(risk, request.DroneValue);
                 var policyNumber = _numberProvider.GeneratePolicyNumber();
 
-                await _repo.SavePolicyAsync(request, policyNumber, premium);
+                var inserted = await _repo.SavePolicyAsync(request, policyNumber, premium);
+                if (inserted.HasNoValue)
+                {
+                    response.Success = false;
+                    response.ErrorMessage = "Invalid insert";
+                    return response;
+                }
 
                 // Enfileira tarefa para o Azure Functions
                 var message = JsonSerializer.Serialize(new

@@ -1,6 +1,8 @@
-﻿namespace SkySecure.Api.Services.Interfaces;
+﻿using CSharpFunctionalExtensions;
+
+namespace SkySecure.Api.Services.Interfaces;
 
 public interface IPolicyRepository
 {
-    Task SavePolicyAsync(Models.PolicyRequest request, string policyNumber, decimal premium);
+    Task<Maybe<bool>> SavePolicyAsync(Models.PolicyRequest request, string policyNumber, decimal premium);
 }

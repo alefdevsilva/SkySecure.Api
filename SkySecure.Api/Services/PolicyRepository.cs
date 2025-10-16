@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using CSharpFunctionalExtensions;
+using Dapper;
 using Microsoft.Data.SqlClient;
 using SkySecure.Api.Services.Interfaces;
 
@@ -15,7 +16,7 @@ namespace SkySecure.Api.Services
             _logger = logger;
         }
 
-        public async Task SavePolicyAsync(Models.PolicyRequest request, string policyNumber, decimal premium)
+        public async Task<Maybe<bool>> SavePolicyAsync(Models.PolicyRequest request, string policyNumber, decimal premium)
         {
             try
             {
@@ -27,7 +28,7 @@ namespace SkySecure.Api.Services
                 var query = @"INSERT INTO Policies (PolicyNumber, ClientName, ClientEmail, DroneModel, DroneValue, Premium, PilotDocument, OperationState, CreatedAt, Status)
                       VALUES (@PolicyNumber, @ClientName, @ClientEmail, @DroneModel, @DroneValue, @Premium, @PilotDocument, @OperationState, @CreatedAt, @Status)";
 
-                await conn.ExecuteAsync(query, new
+                var result = await conn.ExecuteAsync(query, new
                 {
                     PolicyNumber = policyNumber,
                     ClientName = request.ClientName,
@@ -40,6 +41,11 @@ namespace SkySecure.Api.Services
                     CreatedAt = DateTime.UtcNow,
                     Status = "ACTIVE"
                 });
+
+                if (result == 0)
+                    return Maybe.None;
+
+                return true;
             }
             catch (Exception ex)
             {

@@ -1,9 +1,11 @@
-﻿using SkySecure.Api.Services.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using SkySecure.Functions.Services.Interfaces;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
-namespace SkySecure.Api.Services;
+namespace SkySecure.Functions.Services;
 
 public class SendGridEmailService : IEmailService
 {
@@ -67,4 +69,3 @@ public class SendGridEmailService : IEmailService
         }
     }
 }
-

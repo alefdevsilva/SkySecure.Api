@@ -34,6 +34,7 @@ builder.Services.AddScoped<IPilotValidationService, PilotValidationService>();
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<IPolicyNumberProvider, PolicyNumberProvider>();
 builder.Services.AddScoped<IAzureQueueService, AzureQueueService>();
+builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<PolicyIssuanceOrchestrator>();
 
 builder.Services.AddControllers();

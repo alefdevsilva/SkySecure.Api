@@ -1,4 +1,4 @@
-﻿namespace SkySecure.Api.Services.Interfaces;
+﻿namespace SkySecure.Functions.Services.Interfaces;
 
 public interface IEmailService
 {

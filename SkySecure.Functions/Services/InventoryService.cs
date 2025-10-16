@@ -1,7 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
-using SkySecure.Api.Services.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using SkySecure.Functions.Services.Interfaces;
 
-namespace SkySecure.Api.Services;
+namespace SkySecure.Functions.Services;
 
 public class InventoryService : IInventoryService
 {
@@ -22,7 +24,7 @@ public class InventoryService : IInventoryService
             await using var conn = new SqlConnection(cs);
             await conn.OpenAsync();
 
-            var q = "UPDATE DroneInventory SET PoliciesIssued = PoliciesIssued + 1 WHERE Model = @Model";
+            var q = "UPDATE DroneInventory SET PoliciesIssued = PoliciesIssued + 1 WHERE [DroneModel] = @Model";
             await using var cmd = new SqlCommand(q, conn);
             cmd.Parameters.Add(new SqlParameter("@Model", droneModel));
             await cmd.ExecuteNonQueryAsync();

@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using SkySecure.Api.Models;
 using SkySecure.Api.Services.Interfaces;
+using SkySecure.Functions.Models;
+using SkySecure.Functions.Services.Interfaces;
 using System.Text.Json;
 
 namespace SkySecure.Functions
@@ -29,14 +31,14 @@ namespace SkySecure.Functions
         {
             _logger.LogInformation("Processing policy task...");
 
-            var data = JsonSerializer.Deserialize<dynamic>(msg);
-            var request = JsonSerializer.Deserialize<PolicyRequest>(data.Request.ToString());
-            string policyNumber = data.PolicyNumber;
-            decimal premium = data.Premium;
+            //var data = JsonSerializer.Deserialize<PolicyData>(msg);
+            var request = JsonSerializer.Deserialize<PolicyData>(msg);
+            string policyNumber = request.PolicyNumber;
+            decimal premium = request.Premium;
 
-            var pdfPath = await _pdfGenerator.GeneratePdfAsync(request, policyNumber, premium);
-            await _emailService.SendPolicyEmailAsync(request.ClientEmail, pdfPath, policyNumber);
-            await _inventory.IncrementPolicyCountAsync(request.DroneModel);
+            var pdfPath = await _pdfGenerator.GeneratePdfAsync(request.PolicyRequest, policyNumber, premium);
+            await _emailService.SendPolicyEmailAsync(request.PolicyRequest.ClientEmail, pdfPath, policyNumber);
+            await _inventory.IncrementPolicyCountAsync(request.PolicyRequest.DroneModel);
 
             _logger.LogInformation("Finished processing policy {Policy}", policyNumber);
         }

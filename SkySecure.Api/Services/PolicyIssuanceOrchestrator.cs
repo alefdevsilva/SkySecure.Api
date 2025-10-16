@@ -44,13 +44,13 @@ namespace SkySecure.Api.Services
                 var premium = CalculatePremium(risk, request.DroneValue);
                 var policyNumber = _numberProvider.GeneratePolicyNumber();
 
-                //await _repo.SavePolicyAsync(request, policyNumber, premium);
+                await _repo.SavePolicyAsync(request, policyNumber, premium);
 
                 // Enfileira tarefa para o Azure Functions
                 var message = JsonSerializer.Serialize(new
                 {
                     PolicyNumber = policyNumber,
-                    Request = request,
+                    PolicyRequest = request,
                     Premium = premium
                 });
                 await _queue.EnqueueMessageAsync(message);

@@ -25,11 +25,20 @@ namespace SkySecure.Api.Services
 
         public async Task EnqueueMessageAsync(string message)
         {
-            var client = new QueueClient(_conn, _queueName);
-            await client.CreateIfNotExistsAsync();
-            var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(message));
-            await client.SendMessageAsync(base64);
-            _logger.LogInformation("Queued message to {Queue}", _queueName);
+            try
+            {
+                var client = new QueueClient(_conn, _queueName);
+                await client.CreateIfNotExistsAsync();
+                var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(message));
+                await client.SendMessageAsync(base64);
+                _logger.LogInformation("Queued message to {Queue}", _queueName);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+          
         }
     }
 }

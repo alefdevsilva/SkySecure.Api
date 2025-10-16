@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkySecure.Api", "SkySecure.Api.csproj", "{25DC9599-CEB5-46B3-9B90-2B306D86E09A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkySecure.Functions", "..\SkySecure.Functions\SkySecure.Functions.csproj", "{2CA21F19-C80F-4DAF-9CE9-FD89FFA79185}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25DC9599-CEB5-46B3-9B90-2B306D86E09A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25DC9599-CEB5-46B3-9B90-2B306D86E09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25DC9599-CEB5-46B3-9B90-2B306D86E09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25DC9599-CEB5-46B3-9B90-2B306D86E09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CA21F19-C80F-4DAF-9CE9-FD89FFA79185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CA21F19-C80F-4DAF-9CE9-FD89FFA79185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CA21F19-C80F-4DAF-9CE9-FD89FFA79185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CA21F19-C80F-4DAF-9CE9-FD89FFA79185}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75A59B7A-1724-4C3B-9263-FF2DF490DE3C}
+	EndGlobalSection
+EndGlobal

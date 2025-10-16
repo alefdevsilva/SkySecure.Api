@@ -1,0 +1,6 @@
+@SkySecure.Api_HostAddress = http://localhost:5202
+
+GET {{SkySecure.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -30,10 +30,8 @@ namespace SkySecure.Functions
         public async Task Run([QueueTrigger("policy-tasks", Connection = "AzureWebJobsStorage")] string msg)
         {
             _logger.LogInformation("Processing policy task...");
-
-            //var data = JsonSerializer.Deserialize<PolicyData>(msg);
             var request = JsonSerializer.Deserialize<PolicyData>(msg);
-            string policyNumber = request.PolicyNumber;
+            string policyNumber = request!.PolicyNumber;
             decimal premium = request.Premium;
 
             var pdfPath = await _pdfGenerator.GeneratePdfAsync(request.PolicyRequest, policyNumber, premium);

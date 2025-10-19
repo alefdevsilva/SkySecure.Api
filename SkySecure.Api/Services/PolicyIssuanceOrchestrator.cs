@@ -1,4 +1,5 @@
-﻿using SkySecure.Api.Models;
+﻿using CSharpFunctionalExtensions;
+using SkySecure.Api.Models;
 using SkySecure.Api.Services.Interfaces;
 using System.Text.Json;
 
@@ -26,7 +27,7 @@ namespace SkySecure.Api.Services
             _logger = logger;
         }
 
-        public async Task<PolicyResponse> IssuePolicyAsync(PolicyRequest request)
+        public async Task<Result<PolicyResponse>> IssuePolicyAsync(PolicyRequest request)
         {
             var response = new PolicyResponse();
 
@@ -36,7 +37,7 @@ namespace SkySecure.Api.Services
                 if (!resultValidation.IsFailure)
                 {
                     response.Success = false;
-                    response.ErrorMessage = "Invalid pilot certification";
+                    response.ErrorMessage = resultValidation.Error;
                     return response;
                 }
 
@@ -77,14 +78,14 @@ namespace SkySecure.Api.Services
 
         private RiskData CalculateRisk(PolicyRequest request)
         {
-            var r = new RiskData();
-            if (request.DroneValue > 50000) r.RiskLevel = "HIGH";
-            else if (request.DroneValue > 20000) r.RiskLevel = "MEDIUM";
-            else r.RiskLevel = "LOW";
+            var riskData = new RiskData();
+            if (request.DroneValue > 50000) riskData.RiskLevel = "HIGH";
+            else if (request.DroneValue > 20000) riskData.RiskLevel = "MEDIUM";
+            else riskData.RiskLevel = "LOW";
 
             var highRiskAreas = new[] { "SP", "RJ", "DF" };
-            r.RiskMultiplier = highRiskAreas.Contains(request.OperationState) ? 1.5 : 1.0;
-            return r;
+            riskData.RiskMultiplier = highRiskAreas.Contains(request.OperationState) ? 1.5 : 1.0;
+            return riskData;
         }
 
         private decimal CalculatePremium(RiskData risk, decimal droneValue)
